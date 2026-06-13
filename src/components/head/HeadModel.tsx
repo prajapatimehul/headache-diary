@@ -2,24 +2,32 @@
 
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { useGLTF } from "@react-three/drei";
 import type { ThreeEvent } from "@react-three/fiber";
-import { classifyRegion, shapeHead, HEAD_RADIUS, EAR_ANCHORS } from "./regions";
+import { buildCentroids, classifyRegion } from "./regions";
 import { heatColor } from "./heat";
 import { Markers, type PainMark } from "./Markers";
 
 const TAP_PX = 8; // max pointer travel (screen px) to still count as a tap
 const TAP_MS = 300; // max press duration to count as a tap
+const TARGET_HEIGHT = 1.55; // normalize the model to ~unit scene scale
+
+const MODEL_URL = "/head.glb";
 
 /**
- * The procedural head — the app's centerpiece. There is NO .glb; the skull/face
- * is a deformed sphere generated from shapeHead() (the same shaping function the
- * region centroids use, so classification is calibrated by construction). Ears
- * give orientation; a faint translucent brain floats inside for beauty.
+ * The 3D head — a real sculpted human head (LeePerrySmith, three.js examples,
+ * CC-BY by Lee Perry-Smith / Infinite-Realities). Loaded from /head.glb, then
+ * normalized (centered + scaled to ~1.55 units) so it frames in the existing
+ * scene and the tiny markers read at the right size. We override the model's
+ * material with a calm matte-porcelain look (DESIGN.md) rather than skin.
  *
- * Interaction: tap (not drag) drops a PainMark at the hit point. The hit is
- * converted to LOCAL space before classify so region labels are stable under
- * rotation. Markers are rendered as children of THIS group, so they rotate and
- * persist with the head.
+ * Region centroids are derived from the *normalized* bounding box, so tapping
+ * the brow, temple, occiput, etc. classifies correctly with no hand-tuning.
+ *
+ * Interaction: a tap (not a drag) drops a PainMark at the hit point; the hit is
+ * converted to LOCAL space before classify so labels are stable under rotation.
+ * Markers render as children of this group, so the constellation rotates with
+ * the head.
  */
 export function HeadModel({
   intensity,
@@ -31,18 +39,35 @@ export function HeadModel({
   onPlace: (m: PainMark) => void;
 }) {
   const down = useRef<{ x: number; y: number; t: number } | null>(null);
+  const { nodes } = useGLTF(MODEL_URL) as unknown as {
+    nodes: Record<string, THREE.Mesh>;
+  };
 
-  // ---- procedural geometries (built once) ----
-  const headGeom = useMemo(() => buildHeadGeometry(), []);
-  const brainGeom = useMemo(() => buildBrainGeometry(), []);
-  const earGeom = useMemo(() => buildEarGeometry(), []);
+  // Normalize geometry once, and derive region centroids from its bbox.
+  const { geom, centroids } = useMemo(() => {
+    const src =
+      (nodes.LeePerrySmith as THREE.Mesh | undefined)?.geometry ??
+      (Object.values(nodes).find((n) => (n as THREE.Mesh).geometry)
+        ?.geometry as THREE.BufferGeometry);
+    const g = (src as THREE.BufferGeometry).clone();
+    g.computeBoundingBox();
+    const box0 = g.boundingBox!;
+    const center = box0.getCenter(new THREE.Vector3());
+    const size = box0.getSize(new THREE.Vector3());
+    const scale = TARGET_HEIGHT / size.y;
+    g.translate(-center.x, -center.y, -center.z);
+    g.scale(scale, scale, scale);
+    g.computeBoundingBox();
+    g.computeVertexNormals();
+    return { geom: g, centroids: buildCentroids(g.boundingBox!) };
+  }, [nodes]);
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     try {
       (e.target as Element).setPointerCapture?.(e.pointerId);
     } catch {
-      /* setPointerCapture can throw if the target detached; safe to ignore */
+      /* setPointerCapture can throw if target detached; ignore */
     }
     down.current = {
       x: e.nativeEvent.clientX,
@@ -64,11 +89,10 @@ export function HeadModel({
     const elapsed = performance.now() - d.t;
     if (moved > TAP_PX || elapsed > TAP_MS) return; // a rotate/drag, not a tap
 
-    // World hit -> LOCAL space (rotation/scale invariant) for stable classify.
     const localPoint = e.point
       .clone()
       .applyMatrix4(e.object.matrixWorld.clone().invert());
-    const region = classifyRegion(localPoint);
+    const region = classifyRegion(localPoint, centroids);
 
     onPlace({
       id: crypto.randomUUID(),
@@ -84,133 +108,32 @@ export function HeadModel({
 
   return (
     <group>
-      {/* ---- skull + face: the ONLY raycast target (has pointer handlers) ---- */}
       <mesh
-        geometry={headGeom}
+        geometry={geom}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         castShadow
         receiveShadow
       >
-        {/* matte porcelain / graphite with a faint cool sheen — a product render,
-            not a medical-textbook head (DESIGN.md). */}
+        {/* matte porcelain / graphite with a faint cool sheen — a calm product
+            render, not realistic skin (DESIGN.md). */}
         <meshPhysicalMaterial
-          color="#cfd6db"
-          roughness={0.78}
+          color="#d7dde2"
+          roughness={0.74}
           metalness={0}
-          clearcoat={0.12}
-          clearcoatRoughness={0.6}
+          clearcoat={0.14}
+          clearcoatRoughness={0.55}
           sheen={0.5}
           sheenRoughness={0.7}
-          sheenColor="#9fb4c4"
-          envMapIntensity={0.7}
+          sheenColor="#a7bccb"
+          envMapIntensity={0.75}
         />
       </mesh>
 
-      {/* ---- ears (orientation cues) — no handlers => not raycast targets ---- */}
-      {EAR_ANCHORS.map((ear) => (
-        <mesh
-          key={ear.side}
-          geometry={earGeom}
-          position={ear.pos}
-          rotation={[0, ear.side === "L" ? Math.PI / 2 : -Math.PI / 2, 0]}
-          scale={[0.5, 0.85, 0.32]}
-          castShadow
-        >
-          <meshPhysicalMaterial
-            color="#cfd6db"
-            roughness={0.78}
-            metalness={0}
-            sheen={0.4}
-            sheenColor="#9fb4c4"
-            envMapIntensity={0.7}
-          />
-        </mesh>
-      ))}
-
-      {/* ---- faint translucent brain inside, for beauty/orientation ----
-          No pointer handlers + depthWrite=false => never steals a tap. */}
-      <mesh geometry={brainGeom} renderOrder={1} scale={0.82} position={[0, 0.04, -0.02]}>
-        <meshPhysicalMaterial
-          color="#57c7be"
-          emissive="#1f9e95"
-          emissiveIntensity={0.18}
-          transparent
-          opacity={0.12}
-          depthWrite={false}
-          roughness={0.5}
-          metalness={0}
-          transmission={0.4}
-          thickness={0.4}
-        />
-      </mesh>
-
-      {/* ---- pain constellation: child of this group => rotates with the head ---- */}
+      {/* pain constellation — child of this group => rotates with the head */}
       <Markers marks={marks} />
     </group>
   );
 }
 
-// ============================================================================
-// Procedural geometry builders
-// ============================================================================
-
-/** Sphere displaced through shapeHead() -> smooth porcelain head + neck. */
-function buildHeadGeometry(): THREE.BufferGeometry {
-  // High-ish res for a smooth silhouette; BVH (in the scene) keeps raycast cheap.
-  const geo = new THREE.SphereGeometry(1, 128, 96);
-  const pos = geo.attributes.position as THREE.BufferAttribute;
-  const dir = new THREE.Vector3();
-  for (let i = 0; i < pos.count; i++) {
-    dir.set(pos.getX(i), pos.getY(i), pos.getZ(i)).normalize();
-    const p = shapeHead(dir);
-    pos.setXYZ(i, p.x, p.y, p.z);
-  }
-  pos.needsUpdate = true;
-  geo.computeVertexNormals();
-  geo.computeBoundingBox();
-  geo.computeBoundingSphere();
-  return geo;
-}
-
-/** A lumpy two-lobe brain (icosahedron + low-freq noise + a central fissure). */
-function buildBrainGeometry(): THREE.BufferGeometry {
-  const geo = new THREE.IcosahedronGeometry(HEAD_RADIUS * 0.92, 6);
-  const pos = geo.attributes.position as THREE.BufferAttribute;
-  const v = new THREE.Vector3();
-  for (let i = 0; i < pos.count; i++) {
-    v.set(pos.getX(i), pos.getY(i), pos.getZ(i));
-    const n = v.clone().normalize();
-    // gyri/sulci: a few stacked sine bands give a convincing folded surface
-    const folds =
-      0.03 * Math.sin(n.x * 14 + n.y * 9) +
-      0.025 * Math.sin(n.y * 13 - n.z * 11) +
-      0.02 * Math.sin(n.z * 16 + n.x * 7);
-    // longitudinal fissure: pinch along the x=0 midline
-    const fissure = -0.05 * Math.exp(-(n.x * n.x) / 0.01);
-    // squash slightly front-to-back & taper the underside
-    v.multiplyScalar(1 + folds + fissure);
-    v.z *= 1.05;
-    v.y *= 0.95;
-    pos.setXYZ(i, v.x, v.y, v.z);
-  }
-  pos.needsUpdate = true;
-  geo.computeVertexNormals();
-  return geo;
-}
-
-/** A simple flattened ear blob (scaled/positioned by the caller). */
-function buildEarGeometry(): THREE.BufferGeometry {
-  const geo = new THREE.SphereGeometry(0.16, 24, 24);
-  const pos = geo.attributes.position as THREE.BufferAttribute;
-  const v = new THREE.Vector3();
-  for (let i = 0; i < pos.count; i++) {
-    v.set(pos.getX(i), pos.getY(i), pos.getZ(i));
-    // dish the front face inward a touch for an ear-like concavity
-    if (v.z > 0) v.z *= 0.6;
-    pos.setXYZ(i, v.x, v.y, v.z);
-  }
-  pos.needsUpdate = true;
-  geo.computeVertexNormals();
-  return geo;
-}
+useGLTF.preload(MODEL_URL);

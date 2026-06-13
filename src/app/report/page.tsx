@@ -63,7 +63,7 @@ export default function ReportSetupPage() {
       return;
     }
     saveRange(range);
-    router.push("/report/print");
+    router.push("/report/print?auto=1");
   }
 
   const ease = [0.22, 1, 0.36, 1] as const;

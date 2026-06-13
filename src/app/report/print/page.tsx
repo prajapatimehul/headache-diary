@@ -90,6 +90,11 @@ export default function PrintReportPage() {
   // iOS afterprint is flaky, so we never strand the user (visible Back button).
   useEffect(() => {
     if (!rows) return;
+    // Auto-print only when explicitly requested (?auto=1, set by the Export
+    // button). A bare visit shows the report so it can be reviewed first.
+    const auto =
+      new URLSearchParams(window.location.search).get("auto") === "1";
+    if (!auto) return;
     let done = false;
     const back = () => {
       if (done) return;
@@ -123,14 +128,24 @@ export default function PrintReportPage() {
 
   return (
     <>
-      <button
-        type="button"
-        className="print-back"
-        onClick={() => router.back()}
-        aria-label="Back"
-      >
-        ← Back
-      </button>
+      <div className="print-actions">
+        <button
+          type="button"
+          className="print-back"
+          onClick={() => router.back()}
+          aria-label="Back"
+        >
+          ← Back
+        </button>
+        <button
+          type="button"
+          className="print-back"
+          onClick={() => window.print()}
+          aria-label="Print or save as PDF"
+        >
+          ⎙ Print / Save PDF
+        </button>
+      </div>
 
       <div className="report" lang="hi">
         <header className="report-head">

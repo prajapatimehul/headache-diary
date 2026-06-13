@@ -1,65 +1,118 @@
-import Image from "next/image";
+"use client";
+
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db, type PainMark } from "@/lib/db";
+import { saveEntry, pullAndMerge, pushDirty } from "@/lib/db/sync";
+import { PainScale } from "@/components/diary/PainScale";
+import { EntryForm } from "@/components/diary/EntryForm";
+import { InstallHint } from "@/components/ui/InstallHint";
+
+// three.js MUST NOT SSR.
+const HeadScene = dynamic(() => import("@/components/head/HeadScene"), {
+  ssr: false,
+  loading: () => (
+    <div className="grid h-[52dvh] place-items-center text-sm text-muted-foreground">
+      <span className="animate-pulse">Preparing the head…</span>
+    </div>
+  ),
+});
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0 },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
 
 export default function Home() {
+  const [intensity, setIntensity] = useState(5);
+  const [marks, setMarks] = useState<PainMark[]>([]);
+
+  // total logged days drives the "Day N" chip
+  const entryCount = useLiveQuery(() => db.entries.count(), [], 0);
+
+  useEffect(() => {
+    void pullAndMerge();
+    const onOnline = () => void pushDirty();
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
+  }, []);
+
+  const dayN = (entryCount ?? 0) + 1;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <motion.main
+      variants={stagger}
+      initial="hidden"
+      animate="show"
+      className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-28 pt-safe"
+    >
+      <motion.header
+        variants={fadeUp}
+        className="flex items-baseline justify-between pt-4"
+      >
+        <div>
+          <h1 className="font-display text-3xl leading-none">Today</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Tap the head where it hurts.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <span className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium tabular-nums text-muted-foreground">
+          Day {dayN}
+        </span>
+      </motion.header>
+
+      <motion.section
+        variants={fadeUp}
+        className="mt-4 h-[52dvh] w-full touch-none overflow-hidden rounded-3xl border border-border/60 bg-card/30"
+      >
+        <HeadScene
+          intensity={intensity}
+          marks={marks}
+          onPlace={(m) => setMarks((p) => [...p, m])}
+        />
+      </motion.section>
+
+      {marks.length > 0 && (
+        <motion.div
+          variants={fadeUp}
+          className="mt-2 flex items-center justify-between text-xs text-muted-foreground"
+        >
+          <span>
+            {marks.length} {marks.length === 1 ? "spot" : "spots"} marked
+          </span>
+          <button
+            type="button"
+            onClick={() => setMarks([])}
+            className="rounded-full px-2 py-1 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            Clear
+          </button>
+        </motion.div>
+      )}
+
+      <motion.section variants={fadeUp} className="mt-5">
+        <PainScale value={intensity} onChange={setIntensity} />
+      </motion.section>
+
+      <motion.section variants={fadeUp} className="mt-6">
+        <EntryForm
+          marks={marks}
+          intensity={intensity}
+          onSave={async (entry) => {
+            await saveEntry(entry);
+            setMarks([]);
+          }}
+        />
+      </motion.section>
+
+      <InstallHint />
+    </motion.main>
   );
 }

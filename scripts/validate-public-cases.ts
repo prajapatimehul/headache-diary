@@ -252,7 +252,7 @@ function markdownReport(input: {
     );
   }
 
-  return `${lines.join("\n")}\n`;
+  return `${lines.join("\n").trimEnd()}\n`;
 }
 
 const iterations = argInt("iterations", 50);

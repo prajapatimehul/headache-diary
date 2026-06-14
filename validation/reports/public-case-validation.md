@@ -1,6 +1,6 @@
 # Public Case Validation Report
 
-Generated: 2026-06-14T12:31:38.184Z
+Generated: 2026-06-14T12:36:33.040Z
 Date window: 2026-05-16 to 2026-06-14
 Fixtures: 30
 Iterations: 50
@@ -310,6 +310,7 @@ Deterministic across iterations: yes
 - Cause candidates: cervicogenic, sleep
 - MOH at risk: false
 - Issues: none
+
 ### manual-therapy-cgh-pmc2565596
 
 - Status: similar

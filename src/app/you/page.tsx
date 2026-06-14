@@ -7,10 +7,13 @@ import { useLiveQuery } from "dexie-react-hooks";
 import {
   Activity,
   CalendarDays,
+  Check,
   Cloud,
   CloudOff,
   Download,
   History,
+  KeyRound,
+  Loader2,
   LogOut,
   Moon,
   RefreshCw,
@@ -47,6 +50,13 @@ export default function YouPage() {
   const [syncing, setSyncing] = useState(false);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);
 
+  // Set/change password — lets magic-link users adopt email+password login.
+  const [pwOpen, setPwOpen] = useState(false);
+  const [newPw, setNewPw] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
+  const [pwOk, setPwOk] = useState(false);
+  const [pwErr, setPwErr] = useState<string | null>(null);
+
   const theme = useSyncExternalStore(
     subscribeTheme,
     themeSnapshot,
@@ -76,6 +86,26 @@ export default function YouPage() {
   async function signOut() {
     await createClient().auth.signOut();
     setEmail(null);
+  }
+
+  async function savePassword(e: React.FormEvent) {
+    e.preventDefault();
+    setPwBusy(true);
+    setPwErr(null);
+    setPwOk(false);
+    const { error } = await createClient().auth.updateUser({ password: newPw });
+    if (error) {
+      setPwErr(
+        /at least|should be/i.test(error.message)
+          ? "Password must be at least 6 characters."
+          : error.message,
+      );
+    } else {
+      setPwOk(true);
+      setNewPw("");
+      setPwOpen(false);
+    }
+    setPwBusy(false);
   }
 
   async function syncNow() {
@@ -157,7 +187,75 @@ export default function YouPage() {
               Sign out
             </button>
           </div>
-        ) : (
+        ) : null}
+
+        {/* Set / change password — so magic-link users can log in without email */}
+        {authReady && email && (
+          <div className="mt-3 border-t border-border pt-3">
+            {!pwOpen ? (
+              <button
+                onClick={() => {
+                  setPwOpen(true);
+                  setPwOk(false);
+                  setPwErr(null);
+                }}
+                className="flex w-full items-center gap-2 text-left text-sm font-medium text-muted-foreground active:scale-[0.99]"
+              >
+                <KeyRound className="size-4" />
+                <span className="flex-1">
+                  {pwOk ? "Password set" : "Set a password"}
+                </span>
+                {pwOk ? (
+                  <Check className="size-4 text-primary" />
+                ) : (
+                  <span className="text-xs text-muted-foreground">
+                    log in without email
+                  </span>
+                )}
+              </button>
+            ) : (
+              <form onSubmit={savePassword} className="space-y-2">
+                <label htmlFor="newpw" className="text-xs text-muted-foreground">
+                  Choose a password (6+ characters). Then you can log in with your
+                  email + password — no link needed.
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    id="newpw"
+                    type="password"
+                    autoComplete="new-password"
+                    required
+                    minLength={6}
+                    value={newPw}
+                    onChange={(e) => setNewPw(e.target.value)}
+                    placeholder="New password"
+                    disabled={pwBusy}
+                    className="h-11 flex-1 rounded-xl border border-border bg-background px-3 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40 disabled:opacity-60"
+                  />
+                  <button
+                    type="submit"
+                    disabled={pwBusy}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+                  >
+                    {pwBusy ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      "Save"
+                    )}
+                  </button>
+                </div>
+                {pwErr && <p className="text-xs text-destructive">{pwErr}</p>}
+              </form>
+            )}
+            {pwOk && (
+              <p className="mt-2 text-xs text-primary">
+                Saved. Next time you can log in with email + password.
+              </p>
+            )}
+          </div>
+        )}
+
+        {!(authReady && email) && (
           <Link
             href="/login"
             className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground active:scale-[0.99]"

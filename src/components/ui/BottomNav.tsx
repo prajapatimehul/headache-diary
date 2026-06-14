@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { Activity, Sparkles, FileDown, User } from "lucide-react";
+import { Activity, Sparkles, Stethoscope, FileDown, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Tab {
@@ -17,6 +17,7 @@ interface Tab {
 const TABS: Tab[] = [
   { href: "/", label: "Today", icon: Activity, match: (p) => p === "/" || p.startsWith("/history") },
   { href: "/insight", label: "Insight", icon: Sparkles, match: (p) => p.startsWith("/insight") },
+  { href: "/causes", label: "Causes", icon: Stethoscope, match: (p) => p.startsWith("/causes") || p.startsWith("/assess") || p.startsWith("/advocate") || p.startsWith("/learn") },
   { href: "/report", label: "Export", icon: FileDown, match: (p) => p.startsWith("/report") },
   { href: "/you", label: "You", icon: User, match: (p) => p.startsWith("/you") },
 ];
@@ -36,7 +37,7 @@ export function BottomNav() {
         "pb-safe",
       )}
     >
-      <ul className="mx-auto grid max-w-md grid-cols-4">
+      <ul className="mx-auto grid max-w-md grid-cols-5">
         {TABS.map((tab) => {
           const active = tab.match(pathname);
           const Icon = tab.icon;

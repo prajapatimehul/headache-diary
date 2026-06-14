@@ -9,6 +9,7 @@ import { loadRange } from "@/lib/report/range-store";
 import type { DateRange, ReportRow, ReportSummary } from "@/lib/report/types";
 import { loadEntries, type Entry } from "@/lib/db";
 import { classify, toAggregate, type DxResult, type Verdict } from "@/lib/ichd3";
+import { runCauseFinder, loadProfile, type CauseReport } from "@/lib/cause-finder";
 import "./print.css";
 
 // toAggregate() may return DxResult[] (current blueprint) or a DiaryAggregate
@@ -66,6 +67,7 @@ export default function PrintReportPage() {
   const router = useRouter();
   const [rows, setRows] = useState<ReportRow[] | null>(null);
   const [dx, setDx] = useState<DxResult[]>([]);
+  const [cause, setCause] = useState<CauseReport | null>(null);
 
   // Load data inside an effect — IndexedDB + window are client-only.
   useEffect(() => {
@@ -77,8 +79,10 @@ export default function PrintReportPage() {
       const results = resolveDxResults(entries).filter(
         (r) => r.verdict !== "NOT_MET"
       );
+      const causeReport = runCauseFinder(entries, loadProfile());
       if (cancelled) return;
       setDx(results);
+      setCause(causeReport);
       setRows(builtRows);
     })();
     return () => {
@@ -291,6 +295,123 @@ export default function PrintReportPage() {
             clinician sets otherwise. Confirm with a clinician.
           </p>
         </section>
+
+        {/* Cause Finder — secondary/fixable causes + suggested next steps */}
+        {cause &&
+          (cause.emergencies.length > 0 ||
+            cause.redFlags.length > 0 ||
+            cause.candidates.length > 0 ||
+            cause.moh.atRisk ||
+            cause.mismatch.present ||
+            cause.workupGaps.length > 0) && (
+            <section className="ichd3 page-break">
+              <h2>Cause Finder — beyond the primary differential</h2>
+              <p className="intro">
+                Possible secondary / fixable causes and cranial neuralgias the
+                logged pattern fits, with the test that confirms or excludes
+                each. Decision support for clinician review — not a diagnosis.
+              </p>
+
+              {cause.emergencies.length > 0 && (
+                <div className="dx">
+                  <div className="dx-head">
+                    <span className="dx-title">Red flags — assess urgently</span>
+                  </div>
+                  <ul className="crit-list">
+                    {cause.emergencies.concat(cause.redFlags).map((f) => (
+                      <li key={f.id} className="fail">
+                        <span className="mark">⚑</span>
+                        <span>
+                          <b>{f.label}.</b> {f.detail} {f.action}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {cause.emergencies.length === 0 && cause.redFlags.length > 0 && (
+                <div className="dx">
+                  <div className="dx-head">
+                    <span className="dx-title">Worth flagging</span>
+                  </div>
+                  <ul className="crit-list">
+                    {cause.redFlags.map((f) => (
+                      <li key={f.id} className="fail">
+                        <span className="mark">⚑</span>
+                        <span>
+                          <b>{f.label}.</b> {f.detail} {f.action}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {cause.candidates.map((c) => (
+                <div className="dx" key={c.id}>
+                  <div className="dx-head">
+                    <span className="dx-title">
+                      {c.name}
+                      {c.code && <span className="dx-code"> ICHD-3 {c.code}</span>}
+                    </span>
+                    <span className="verdict needs_test">
+                      {c.urgency === "emergency"
+                        ? "Emergency"
+                        : c.urgency === "urgent"
+                          ? "See soon"
+                          : "Discuss"}
+                    </span>
+                  </div>
+                  <ul className="crit-list">
+                    {c.matched.map((m, i) => (
+                      <li key={i} className="pass">
+                        <span className="mark">✓</span>
+                        <span>{m}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="needs-test">
+                    Test: {c.confirmingTest} · See: {c.specialist}
+                  </p>
+                  {c.note && <p className="missing">{c.note}</p>}
+                </div>
+              ))}
+
+              {cause.moh.atRisk && (
+                <div className="dx">
+                  <div className="dx-head">
+                    <span className="dx-title">Medication-overuse risk</span>
+                  </div>
+                  <p className="needs-test">{cause.moh.message}</p>
+                </div>
+              )}
+              {cause.mismatch.present && (
+                <div className="dx">
+                  <div className="dx-head">
+                    <span className="dx-title">Treatment-layer check</span>
+                  </div>
+                  <p className="needs-test">{cause.mismatch.message}</p>
+                </div>
+              )}
+              {cause.workupGaps.length > 0 && (
+                <div className="dx">
+                  <div className="dx-head">
+                    <span className="dx-title">Tests worth considering</span>
+                  </div>
+                  <ul className="crit-list">
+                    {cause.workupGaps.map((g, i) => (
+                      <li key={i} className="fail">
+                        <span className="mark">▸</span>
+                        <span>
+                          <b>{g.test}.</b> {g.reason}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
       </div>
     </>
   );

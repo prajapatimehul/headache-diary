@@ -56,6 +56,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full">
+        {/* Apply saved theme before paint (dark is the default). Keeps a chosen
+            light theme from flashing/reverting on full reloads. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');var d=document.documentElement.classList;if(t==='light'){d.remove('dark')}else{d.add('dark')}}catch(e){}",
+          }}
+        />
         {children}
         <BottomNav />
       </body>

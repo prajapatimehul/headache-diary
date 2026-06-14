@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { FileText, FileJson, Printer, CalendarRange } from "lucide-react";
 
-import { buildReportRows, summarize } from "@/lib/report/build";
+import { buildReportRows } from "@/lib/report/build";
 import { downloadCSV, downloadJSON } from "@/lib/report/download";
 import { entriesToDiaryEntries } from "@/lib/report/entry-adapter";
 import { saveRange } from "@/lib/report/range-store";

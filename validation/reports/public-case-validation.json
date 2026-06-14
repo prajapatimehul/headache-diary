@@ -1,0 +1,1030 @@
+{
+  "iterations": 50,
+  "deterministic": true,
+  "cases": [
+    {
+      "id": "mwa-myoclonus-pmc11464945",
+      "source": {
+        "pmcid": "PMC11464945",
+        "title": "Migraine With Aura Accompanied by Myoclonus: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11464945/",
+        "sourceDiagnosis": "migraine with aura"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "1.2",
+          "name": "Migraine with aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 6,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "mwa-menstrual-sensory-pmc3381070",
+      "source": {
+        "pmcid": "PMC3381070",
+        "title": "Pure menstrual migraine with sensory aura: a case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3381070/",
+        "sourceDiagnosis": "migraine with sensory aura"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "1.2",
+          "name": "Migraine with aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 5,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "mwa-pfo-closure-pmc11446259",
+      "source": {
+        "pmcid": "PMC11446259",
+        "title": "Resolution of Migraine with Aura Post-PFO Closure in a Young Female: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11446259/",
+        "sourceDiagnosis": "migraine with aura"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "1.2",
+          "name": "Migraine with aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 7,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "mwa-aura-status-pmc10699829",
+      "source": {
+        "pmcid": "PMC10699829",
+        "title": "A Case of Migraine Aura Status in a Migraine Patient With Typical Aura",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10699829/",
+        "sourceDiagnosis": "migraine with typical aura / aura status"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.5.1",
+          "name": "Probable migraine without aura",
+          "verdict": "PROBABLE",
+          "missing": []
+        },
+        {
+          "code": "1.2",
+          "name": "Migraine with aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 4,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "mwoa-fluorescent-trigger-pmc12665120",
+      "source": {
+        "pmcid": "PMC12665120",
+        "title": "Triggered Migraine Attack by Flickering Fluorescent Lights in an Assembly Line Worker: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12665120/",
+        "sourceDiagnosis": "triggered migraine attack"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 6,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "mwoa-neurocysticercosis-mimic-pmc4083102",
+      "source": {
+        "pmcid": "PMC4083102",
+        "title": "Cerebral neurocysticercosis mimicking or comorbid with episodic migraine?",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4083102/",
+        "sourceDiagnosis": "episodic migraine-like headache secondary mimic"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 5,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cm-anti-cgrp-pmc10198612",
+      "source": {
+        "pmcid": "PMC10198612",
+        "title": "A case report of a chronic migraine patient treated with three different anti-CGRP monoclonal antibodies",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10198612/",
+        "sourceDiagnosis": "chronic migraine"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [
+        "1.3"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 22,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cm-chiropractic-pmc2682939",
+      "source": {
+        "pmcid": "PMC2682939",
+        "title": "Chiropractic management of chronic migraine: a case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2682939/",
+        "sourceDiagnosis": "chronic migraine"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [
+        "1.3"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 20,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cluster-sinonasal-pmc10902516",
+      "source": {
+        "pmcid": "PMC10902516",
+        "title": "Cluster Headache Presenting As Sinonasal Pathology in a Young Adult: A Diagnostic Odyssey",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10902516/",
+        "sourceDiagnosis": "cluster headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 8,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cluster-atypical-pmc5227136",
+      "source": {
+        "pmcid": "PMC5227136",
+        "title": "Chronic Cluster Headache with an Atypical Presentation and Treatment Response",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5227136/",
+        "sourceDiagnosis": "cluster headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 10,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cluster-myoclonus-pmc3325438",
+      "source": {
+        "pmcid": "PMC3325438",
+        "title": "A Case of Cluster Headache Accompanied by Myoclonus and Hemiparesis",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3325438/",
+        "sourceDiagnosis": "cluster headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 7,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "cluster-sleep-pmc10184054",
+      "source": {
+        "pmcid": "PMC10184054",
+        "title": "A Rare Case of Cluster Headache Occurring Exclusively During Sleep Without Autonomic Symptoms and Agitation",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10184054/",
+        "sourceDiagnosis": "atypical cluster headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 7,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ph-hypnic-comorbid-pmc11807410",
+      "source": {
+        "pmcid": "PMC11807410",
+        "title": "Co-morbid Indomethacin-Responsive Headaches in a Woman in Her Late 60s With Paroxysmal Hemicrania and Hypnic Headache",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11807410/",
+        "sourceDiagnosis": "paroxysmal hemicrania"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "3.2",
+          "name": "Paroxysmal hemicrania",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 22,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ph-pediatric-case1-pmc3072501",
+      "source": {
+        "pmcid": "PMC3072501",
+        "title": "Chronic paroxysmal hemicrania in paediatric age: report of two cases",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3072501/",
+        "caseLabel": "case 1",
+        "sourceDiagnosis": "chronic paroxysmal hemicrania"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "3.2",
+          "name": "Paroxysmal hemicrania",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 24,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ph-pediatric-case2-pmc3072501",
+      "source": {
+        "pmcid": "PMC3072501",
+        "title": "Chronic paroxysmal hemicrania in paediatric age: report of two cases",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3072501/",
+        "caseLabel": "case 2",
+        "sourceDiagnosis": "chronic paroxysmal hemicrania"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "3.2",
+          "name": "Paroxysmal hemicrania",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 21,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ph-stroke-mimic-pmc7542950",
+      "source": {
+        "pmcid": "PMC7542950",
+        "title": "Paroxysmal hemicrania masquerading as a stroke in an elderly gentleman: case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7542950/",
+        "sourceDiagnosis": "paroxysmal hemicrania"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "3.2"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "3.1",
+          "name": "Cluster headache",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "3.2",
+          "name": "Paroxysmal hemicrania",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "trigeminal-neuralgia",
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 20,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "hc-rhinosinusitis-pmc11824416",
+      "source": {
+        "pmcid": "PMC11824416",
+        "title": "Hemicrania continua with rhinosinusitis: a case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11824416/",
+        "sourceDiagnosis": "hemicrania continua"
+      },
+      "status": "similar",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "3.4"
+      ],
+      "positiveDx": [],
+      "causeIds": [
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "hc-remitting-pmc6536239",
+      "source": {
+        "pmcid": "PMC6536239",
+        "title": "Remitting hemicrania continua: case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6536239/",
+        "sourceDiagnosis": "hemicrania continua"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "3.4"
+      ],
+      "positiveDx": [],
+      "causeIds": [
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "hc-aneurysm-pmc7938477",
+      "source": {
+        "pmcid": "PMC7938477",
+        "title": "Hemicrania continua associated with an unruptured anterior communicating artery aneurysm: first case report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7938477/",
+        "sourceDiagnosis": "hemicrania continua-like headache with secondary association"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "3.4"
+      ],
+      "positiveDx": [],
+      "causeIds": [
+        "rhinogenic",
+        "cervicogenic",
+        "eye-strain",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ndph-erenumab-pmc12178447",
+      "source": {
+        "pmcid": "PMC12178447",
+        "title": "Complete Resolution of New Daily Persistent Headache With Migraine-Like Features Following Erenumab Treatment: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12178447/",
+        "sourceDiagnosis": "new daily persistent headache"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "4.10"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        },
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ndph-postinfectious-pmc12959850",
+      "source": {
+        "pmcid": "PMC12959850",
+        "title": "Steroid-Responsive, Post-infectious New Daily Persistent Headache With Mild Cerebrospinal Fluid Pleocytosis: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12959850/",
+        "sourceDiagnosis": "post-infectious new daily persistent headache"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "4.10"
+      ],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ndph-botox-pmc4715056",
+      "source": {
+        "pmcid": "PMC4715056",
+        "title": "Botulinum toxin type A therapy for new daily persistent headache",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4715056/",
+        "sourceDiagnosis": "new daily persistent headache"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "4.10"
+      ],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "ndph-venlafaxine-pmc6503587",
+      "source": {
+        "pmcid": "PMC6503587",
+        "title": "Resolution of new daily persistent headache by a tumor necrosis factor alpha antagonist, Venlafaxine",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6503587/",
+        "sourceDiagnosis": "new daily persistent headache"
+      },
+      "status": "honest-limited",
+      "expectedDx": [],
+      "observationLimitedDx": [
+        "4.10"
+      ],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 30,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "moh-screening-pmc9159379",
+      "source": {
+        "pmcid": "PMC9159379",
+        "title": "Screening for Medication Overuse Headache Can Reduce Patients' Suffering From Chronic Daily Headache: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9159379/",
+        "sourceDiagnosis": "medication-overuse headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [
+        "8.2"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 24,
+      "insightStage": "strong",
+      "mohAtRisk": true,
+      "issues": []
+    },
+    {
+      "id": "moh-electroacupuncture-pmc11076970",
+      "source": {
+        "pmcid": "PMC11076970",
+        "title": "Effects of electroacupuncture on treatment-resistant chronic migraine with medication overuse headache",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11076970/",
+        "sourceDiagnosis": "chronic migraine with medication-overuse headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [
+        "1.3",
+        "8.2"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 22,
+      "insightStage": "strong",
+      "mohAtRisk": true,
+      "issues": []
+    },
+    {
+      "id": "moh-kampo-tj54-pmc8553297",
+      "source": {
+        "pmcid": "PMC8553297",
+        "title": "Medication Overuse Headache Successfully Treated by Japanese Herbal Kampo Medicine",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8553297/",
+        "sourceDiagnosis": "medication-overuse headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "1.1"
+      ],
+      "observationLimitedDx": [
+        "8.2"
+      ],
+      "positiveDx": [
+        {
+          "code": "1.1",
+          "name": "Migraine without aura",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 23,
+      "insightStage": "strong",
+      "mohAtRisk": true,
+      "issues": []
+    },
+    {
+      "id": "cervical-disc-pmc11258748",
+      "source": {
+        "pmcid": "PMC11258748",
+        "title": "Cervicogenic Headache due to Lower Segment Cervical Disk Herniation: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11258748/",
+        "sourceDiagnosis": "cervicogenic headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "11.2.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        },
+        {
+          "code": "11.2.1",
+          "name": "Cervicogenic headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "cervicogenic",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 18,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "manual-therapy-cgh-pmc2565596",
+      "source": {
+        "pmcid": "PMC2565596",
+        "title": "Orthopaedic Manual Physical Therapy Including Thrust Manipulation and Exercise in the Management of a Patient With Cervicogenic Headache: A Case Report",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2565596/",
+        "sourceDiagnosis": "cervicogenic headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "11.2.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        },
+        {
+          "code": "11.2.1",
+          "name": "Cervicogenic headache",
+          "verdict": "NEEDS_TEST",
+          "missing": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      ],
+      "causeIds": [
+        "cervicogenic",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 18,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "directional-cgh-pmc10642309",
+      "source": {
+        "pmcid": "PMC10642309",
+        "title": "Utilizing directional preference in the management of cervicogenic headache: a case series",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10642309/",
+        "caseLabel": "case-series representative",
+        "sourceDiagnosis": "cervicogenic headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "11.2.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        },
+        {
+          "code": "11.2.1",
+          "name": "Cervicogenic headache",
+          "verdict": "NEEDS_TEST",
+          "missing": [
+            "A",
+            "B",
+            "C"
+          ]
+        }
+      ],
+      "causeIds": [
+        "cervicogenic",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 16,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    },
+    {
+      "id": "c2-prf-cgh-pmc3173620",
+      "source": {
+        "pmcid": "PMC3173620",
+        "title": "Pulsed radiofrequency of the second cervical ganglion for cervicogenic headache",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3173620/",
+        "sourceDiagnosis": "cervicogenic headache"
+      },
+      "status": "similar",
+      "expectedDx": [
+        "11.2.1"
+      ],
+      "observationLimitedDx": [],
+      "positiveDx": [
+        {
+          "code": "2.4",
+          "name": "Chronic tension-type headache",
+          "verdict": "PROBABLE",
+          "missing": []
+        },
+        {
+          "code": "11.2.1",
+          "name": "Cervicogenic headache",
+          "verdict": "MET",
+          "missing": []
+        }
+      ],
+      "causeIds": [
+        "cervicogenic",
+        "sleep"
+      ],
+      "reportRows": 30,
+      "headacheDays": 17,
+      "insightStage": "strong",
+      "mohAtRisk": false,
+      "issues": []
+    }
+  ]
+}

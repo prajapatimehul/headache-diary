@@ -150,7 +150,7 @@ export function tensionType(d: DiaryAggregate): DxResult {
   ];
   const cN = cChars.filter(Boolean).length;
   // chronic allows mild nausea; episodic forbids nausea entirely
-  const isChronic = d.headacheDaysPerMonth >= 15 && d.observationMonths > 3;
+  const isChronicPattern = d.headacheDaysPerMonth >= 15;
   const dEpisodic = a.nausea === "none" && !a.vomiting && !(a.photophobia && a.phonophobia);
   const dChronic =
     !((a.photophobia && a.phonophobia) || ["moderate", "severe"].includes(a.nausea)) && !a.vomiting;
@@ -158,16 +158,16 @@ export function tensionType(d: DiaryAggregate): DxResult {
   const crits = [
     c(
       "B",
-      isChronic ? "Lasts hours-days or unremitting" : "Lasts 30 min - 7 days",
-      isChronic ? true : durOkEpisodic,
+      isChronicPattern ? "Lasts hours-days or unremitting" : "Lasts 30 min - 7 days",
+      isChronicPattern ? true : durOkEpisodic,
     ),
     c("C", `>=2 of: bilateral, pressing, mild/moderate, not aggravated (got ${cN})`, cN >= 2),
     c(
       "D",
-      isChronic
+      isChronicPattern
         ? "No moderate/severe nausea, <=1 of photo/phono/mild-nausea"
         : "No nausea/vomiting, <=1 of photo/phono",
-      isChronic ? dChronic : dEpisodic,
+      isChronicPattern ? dChronic : dEpisodic,
     ),
     c("E", "Not better accounted for by another ICHD-3 dx", !d.betterAccountedByOtherDx),
   ];
@@ -175,10 +175,10 @@ export function tensionType(d: DiaryAggregate): DxResult {
   let code = "2.x";
   let name = "Tension-type headache";
   let enough = false;
-  if (isChronic) {
+  if (isChronicPattern) {
     code = "2.3";
     name = "Chronic tension-type headache";
-    enough = true;
+    enough = d.observationMonths > 3;
   } else if (d.headacheDaysPerMonth >= 1 && d.headacheDaysPerMonth < 15) {
     code = "2.2";
     name = "Frequent episodic TTH";
@@ -408,10 +408,14 @@ export function ndph(d: DiaryAggregate): DxResult {
 export function cervicogenic(d: DiaryAggregate): DxResult {
   const a = d.attack;
   // crit C: >=2 of 4 causation items; items 1-2 are clinical-history, item 3 diary-derivable, item 4 = nerve block (test)
+  const diaryNeckSignal =
+    a.neckRangeOfMotionReduced &&
+    a.headacheWorsenedByNeckManoeuvres &&
+    (a.sideLocked || a.painRegions.includes("occipital"));
   const causationItems = [
     false, // C1 temporal relation to cervical disorder onset — clinician input, default unknown
     false, // C2 improved/resolved with cervical disorder — clinician input, default unknown
-    d.attack.neckRangeOfMotionReduced && d.attack.headacheWorsenedByNeckManoeuvres, // C3 diary-derivable
+    diaryNeckSignal, // C3 diary-derivable
     d.nerveBlockAbolishesHeadache === "yes", // C4 nerve block (test)
   ];
   const causationCount = causationItems.filter(Boolean).length;
@@ -429,7 +433,11 @@ export function cervicogenic(d: DiaryAggregate): DxResult {
   let verdict: Verdict;
   let needsTest: string | undefined;
   if (crits.every((x) => x.passed)) verdict = "MET";
-  else if (!d.cervicalImagingOrClinicalEvidence || d.nerveBlockAbolishesHeadache === "not_tested") {
+  else if (
+    diaryNeckSignal &&
+    (!d.cervicalImagingOrClinicalEvidence ||
+      d.nerveBlockAbolishesHeadache === "not_tested")
+  ) {
     verdict = "NEEDS_TEST";
     needsTest =
       "Requires clinical/imaging evidence of a cervical lesion and/or diagnostic nerve block. Cannot conclude cervicogenic headache from diary alone.";
@@ -529,8 +537,7 @@ const NEEDS_TEST_CODES = ["3.2", "3.4", "11.2.1"];
  *  - daysLogged >= 30          -> "strong"      (full classify() + caveats)
  */
 export function progressiveInsight(entries: Entry[]): ProgressiveInsight {
-  const headacheDays = entries.filter((e) => !e.no_headache);
-  const daysLogged = headacheDays.length;
+  const daysLogged = new Set(entries.map((e) => e.date)).size;
 
   /* ---- Warmup: not enough data to say anything useful yet ---- */
   if (daysLogged < 5) {
@@ -540,7 +547,7 @@ export function progressiveInsight(entries: Entry[]): ProgressiveInsight {
       confidence: 0,
       topCandidates: [],
       needed: [
-        `Keep logging — ${5 - daysLogged} more headache day${5 - daysLogged === 1 ? "" : "s"} until a preliminary read.`,
+        `Keep logging — ${5 - daysLogged} more logged day${5 - daysLogged === 1 ? "" : "s"} until a preliminary read.`,
       ],
       caveats: [
         DISCLAIMER,
@@ -564,7 +571,7 @@ export function progressiveInsight(entries: Entry[]): ProgressiveInsight {
     // Linear ramp 0.2 -> ~0.55 across the 5..29 window.
     const confidence = Math.min(0.55, 0.2 + ((daysLogged - 5) / 25) * 0.35);
     const needed: string[] = [
-      `Log to 30 headache days for a strong read (${Math.max(0, 30 - daysLogged)} to go).`,
+      `Log to 30 days for a strong read (${Math.max(0, 30 - daysLogged)} to go).`,
     ];
     // What separates the leading candidates?
     for (const cand of topCandidates) {

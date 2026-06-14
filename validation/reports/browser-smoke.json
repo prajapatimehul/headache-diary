@@ -1,0 +1,19 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "results": [
+    {
+      "viewport": "mobile",
+      "reportRows": 30,
+      "hasMigraineWithAura": true,
+      "hasUnexpectedCervicogenicDx": false,
+      "consoleErrors": []
+    },
+    {
+      "viewport": "desktop",
+      "reportRows": 30,
+      "hasMigraineWithAura": true,
+      "hasUnexpectedCervicogenicDx": false,
+      "consoleErrors": []
+    }
+  ]
+}

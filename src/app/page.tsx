@@ -38,8 +38,15 @@ export default function Home() {
   const entryCount = useLiveQuery(() => db.entries.count(), [], 0);
 
   useEffect(() => {
-    void pullAndMerge();
-    const onOnline = () => void pushDirty();
+    // Best-effort background sync — surface failures to the console only here;
+    // the "Sync now" button on /you reports them to the user.
+    void pullAndMerge().catch((e) =>
+      console.error("[sync] initial pull failed", e),
+    );
+    const onOnline = () =>
+      void pushDirty().catch((e) =>
+        console.error("[sync] reconnect push failed", e),
+      );
     window.addEventListener("online", onOnline);
     return () => window.removeEventListener("online", onOnline);
   }, []);

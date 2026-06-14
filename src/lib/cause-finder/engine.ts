@@ -9,6 +9,7 @@
 // the free-text note. Decision support, never a diagnosis.
 
 import type { Entry } from "@/lib/db";
+import { courseAggregates } from "@/lib/ichd3/aggregate";
 import type { CauseProfile } from "./profile";
 import type {
   CauseCandidate,
@@ -90,6 +91,10 @@ function summarize(entries: Entry[]): Summary {
 
   const latest = hd[hd.length - 1] ?? sorted[sorted.length - 1];
 
+  // Monthly/course numbers computed from the FULL history (the per-entry
+  // snapshot fields are written as 0 by the form — never trust them here).
+  const course = courseAggregates(entries);
+
   return {
     totalDays: sorted.length,
     headacheDays: hd.length,
@@ -138,12 +143,12 @@ function summarize(entries: Entry[]): Summary {
         (e.intensity ?? e.worst ?? 0) >= 6 &&
         (e.nausea !== "none" || (e.photophobia && e.phonophobia)),
     ),
-    headacheDaysPerMonth: latest?.headache_days_per_month ?? 0,
-    observationMonths: latest?.observation_months ?? 0,
+    headacheDaysPerMonth: course.headacheDaysPerMonth,
+    observationMonths: course.observationMonths,
     onsetSuddenDaily:
       (latest?.onset_pattern ?? "") ===
       "daily_unremitting_from_onset_within_24h",
-    acuteMedDaysPerMonth: latest?.acute_med_days_per_month ?? 0,
+    acuteMedDaysPerMonth: course.acuteMedDaysPerMonth,
     medClass: latest?.med_class ?? "none",
     meds: Array.from(new Set(hd.flatMap((e) => e.meds ?? []))),
   };
@@ -507,7 +512,10 @@ function candidates(s: Summary, p: CauseProfile): CauseCandidate[] {
 /* ------------------------------------------------------------------ */
 
 function mohStatus(s: Summary): MohStatus {
-  const simple = s.medClass === "simple_nonopioid" || s.medClass === "none";
+  // Match the ICHD engine: only simple non-opioid analgesics use the 15-day
+  // line; everything else (incl. unspecified) uses 10. MOH only fires when
+  // there is actual acute-med use (acuteMedDaysPerMonth >= threshold).
+  const simple = s.medClass === "simple_nonopioid";
   const threshold = simple ? 15 : 10;
   const atRisk = s.acuteMedDaysPerMonth >= threshold;
   return {

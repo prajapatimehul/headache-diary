@@ -15,12 +15,13 @@ import "./print.css";
 // toAggregate() may return DxResult[] (current blueprint) or a DiaryAggregate
 // object; normalize to DxResult[] either way so the report can't break.
 function resolveDxResults(entries: Entry[]): DxResult[] {
-  const agg = toAggregate(entries) as unknown;
-  if (agg == null) return [];
-  if (Array.isArray(agg)) return agg as DxResult[];
   try {
+    const agg = toAggregate(entries) as unknown;
+    if (agg == null) return [];
+    if (Array.isArray(agg)) return agg as DxResult[];
     return (classify(agg) as unknown as DxResult[]) ?? [];
-  } catch {
+  } catch (e) {
+    console.error("[report] ICHD-3 analysis failed", e);
     return [];
   }
 }
@@ -68,22 +69,28 @@ export default function PrintReportPage() {
   const [rows, setRows] = useState<ReportRow[] | null>(null);
   const [dx, setDx] = useState<DxResult[]>([]);
   const [cause, setCause] = useState<CauseReport | null>(null);
+  const [failed, setFailed] = useState(false);
 
   // Load data inside an effect — IndexedDB + window are client-only.
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const entries = await loadEntries();
-      const range: DateRange = loadRange() ?? { kind: "last30" };
-      const builtRows = buildReportRows(entriesToDiaryEntries(entries), range);
-      const results = resolveDxResults(entries).filter(
-        (r) => r.verdict !== "NOT_MET"
-      );
-      const causeReport = runCauseFinder(entries, loadProfile());
-      if (cancelled) return;
-      setDx(results);
-      setCause(causeReport);
-      setRows(builtRows);
+      try {
+        const entries = await loadEntries();
+        const range: DateRange = loadRange() ?? { kind: "last30" };
+        const builtRows = buildReportRows(entriesToDiaryEntries(entries), range);
+        const results = resolveDxResults(entries).filter(
+          (r) => r.verdict !== "NOT_MET"
+        );
+        const causeReport = runCauseFinder(entries, loadProfile());
+        if (cancelled) return;
+        setDx(results);
+        setCause(causeReport);
+        setRows(builtRows);
+      } catch (e) {
+        console.error("[report] failed to build", e);
+        if (!cancelled) setFailed(true);
+      }
     })();
     return () => {
       cancelled = true;
@@ -123,6 +130,30 @@ export default function PrintReportPage() {
       window.removeEventListener("afterprint", back);
     };
   }, [rows, router]);
+
+  if (failed) {
+    return (
+      <div style={{ padding: 24, maxWidth: 360 }}>
+        <p style={{ fontWeight: 600 }}>Couldn&rsquo;t build the report.</p>
+        <p style={{ color: "#6b7280", marginTop: 4 }}>
+          Something went wrong reading your diary. Please go back and try again.
+        </p>
+        <button
+          type="button"
+          onClick={() => router.back()}
+          style={{
+            marginTop: 16,
+            padding: "8px 16px",
+            borderRadius: 10,
+            border: "1px solid #d1d5db",
+            cursor: "pointer",
+          }}
+        >
+          Back
+        </button>
+      </div>
+    );
+  }
 
   if (!rows) {
     return <p style={{ padding: 24 }}>Preparing report…</p>;

@@ -84,7 +84,17 @@ export default function YouPage() {
   }
 
   async function signOut() {
+    // Flush anything unsynced first, then clear the local DB — otherwise the
+    // next person to use this device/browser would see this account's entries
+    // (Dexie is local and not RLS-gated). Synced data is safe in the cloud and
+    // returns on next sign-in via pullAndMerge.
+    try {
+      await pushDirty();
+    } catch (e) {
+      console.error("[sync] flush before sign-out failed", e);
+    }
     await createClient().auth.signOut();
+    await db.entries.clear();
     setEmail(null);
   }
 

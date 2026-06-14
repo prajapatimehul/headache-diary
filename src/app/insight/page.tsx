@@ -188,16 +188,18 @@ const EDUCATION = "ICHD-3 recognizes 14 major groups & 300+ types of headache.";
 export default function InsightPage() {
   const entries = useLiveQuery(() => db.entries.toArray(), []);
 
+  // undefined = still loading; null = computation failed (don't spin forever).
   const insight = useMemo(() => {
-    if (!entries) return null;
+    if (!entries) return undefined;
     try {
       return progressiveInsight(entries);
-    } catch {
+    } catch (e) {
+      console.error("[insight] failed to compute", e);
       return null;
     }
   }, [entries]);
 
-  if (entries === undefined || insight === null) {
+  if (entries === undefined || insight === undefined) {
     return (
       <main className="mx-auto w-full max-w-md px-4 pb-28 pt-safe">
         <header className="pt-4">
@@ -206,6 +208,23 @@ export default function InsightPage() {
         <div className="mt-6 space-y-2" aria-hidden>
           <div className="h-40 animate-pulse rounded-3xl bg-card/50" />
           <div className="h-28 animate-pulse rounded-2xl bg-card/50" />
+        </div>
+      </main>
+    );
+  }
+
+  if (insight === null) {
+    return (
+      <main className="mx-auto w-full max-w-md px-4 pb-28 pt-safe">
+        <header className="pt-4">
+          <h1 className="font-display text-3xl leading-none">Insight</h1>
+        </header>
+        <div className="mt-6 rounded-2xl border border-border bg-card p-5 text-sm">
+          <p className="font-medium">We couldn&rsquo;t read your diary just now.</p>
+          <p className="mt-1 text-muted-foreground">
+            One of your entries may be incomplete. Try reloading; if it persists,
+            re-saving your most recent day usually fixes it.
+          </p>
         </div>
       </main>
     );

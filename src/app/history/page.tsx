@@ -58,7 +58,9 @@ export default function HistoryPage() {
   );
 
   useEffect(() => {
-    void pullAndMerge();
+    void pullAndMerge().catch((e) =>
+      console.error("[sync] history pull failed", e),
+    );
   }, []);
 
   return (

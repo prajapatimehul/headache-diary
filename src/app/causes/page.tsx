@@ -31,14 +31,14 @@ function CopyLine({ text }: { text: string }) {
   return (
     <button
       type="button"
-      onClick={() => {
+      onClick={async () => {
         try {
-          navigator.clipboard?.writeText(text);
+          await navigator.clipboard?.writeText(text);
+          setDone(true);
+          setTimeout(() => setDone(false), 1500);
         } catch {
-          /* ignore */
+          /* clipboard unavailable / permission denied — don't claim success */
         }
-        setDone(true);
-        setTimeout(() => setDone(false), 1500);
       }}
       className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-primary"
     >

@@ -37,14 +37,14 @@ function ScriptCard({ title, text }: { title: string; text: string }) {
       <p className="mt-1 text-sm italic text-muted-foreground">“{text}”</p>
       <button
         type="button"
-        onClick={() => {
+        onClick={async () => {
           try {
-            navigator.clipboard?.writeText(text);
+            await navigator.clipboard?.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
           } catch {
-            /* ignore */
+            /* clipboard unavailable / permission denied — don't claim success */
           }
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
         }}
         className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-primary"
       >

@@ -1,0 +1,124 @@
+Headache Diary — Doctor Report
+Generated 6/14/2026 · 30 day(s) · 2026-05-16 → 2026-06-14
+
+
+
+                6                                         7                               7                             0
+          Headache days                             Avg worst /10                       Peak /10                    Med doses
+
+
+
+Daily worst /10
+
+
+
+
+Each bar = one logged day, colored by worst pain (teal   → red).
+ Date    Day    Worst    Regions (intensity)    Duration       Symptoms   Meds   Note
+
+ 2026-05-16     Sat     7   Temple       12h    nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                            (7)                 aura, aggravated by activity                                 throbbing pain.
+
+ 2026-05-17     Sun     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-18     Mon     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-19     Tue     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-20     Wed     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-21     Thu     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-22     Fri     7   Temple       12h    nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                            (7)                 aura, aggravated by activity                                 throbbing pain.
+
+ 2026-05-23     Sat     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-24     Sun     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-25     Mon     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-26     Tue     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-27     Wed     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-28     Thu     7   Temple       12h    nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                            (7)                 aura, aggravated by activity                                 throbbing pain.
+
+ 2026-05-29     Fri     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-30     Sat     0   -               -   -                                                        -   No headache logged.
+
+ 2026-05-31     Sun     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-01     Mon     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-02     Tue     7   Temple       12h    nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                            (7)                 aura, aggravated by activity                                 throbbing pain.
+
+ 2026-06-03     Wed     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-04     Thu     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-05     Fri     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-06     Sat     0   -               -   -                                                        -   No headache logged.
+
+ 2026-06-07     Sun     0   -               -   -                                                        -   No headache logged.
+2026-06-08   Mon   7   Temple   12h   nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                       (7)            aura, aggravated by activity                                 throbbing pain.
+
+2026-06-09   Tue   0   -          -   -                                                        -   No headache logged.
+
+2026-06-10   Wed   0   -          -   -                                                        -   No headache logged.
+
+2026-06-11   Thu   0   -          -   -                                                        -   No headache logged.
+
+2026-06-12   Fri   0   -          -   -                                                        -   No headache logged.
+
+2026-06-13   Sat   0   -          -   -                                                        -   No headache logged.
+
+2026-06-14   Sun   7   Temple   12h   nausea (moderate), photophobia, phonophobia, vomiting,   -   Visual aura, vomiting, right
+                       (7)            aura, aggravated by activity                                 throbbing pain.
+ICHD-3 Classification Analysis
+Deterministic aggregation of the logged pattern against published ICHD-3 criteria, for clinician review. Diagnoses requiring a clinical test
+(e.g. indomethacin trial, imaging, nerve block) are capped at “needs clinical test” and are never auto-concluded from the diary. Only
+diagnoses with at least a partial signal are shown.
+
+
+  Migraine without aura ICHD-3 1.1                                                                                            Criteria met
+
+  ✓ A. >=5 attacks (got 6)
+  ✓ B. Attacks last 4-72h (untreated)
+  ✓ C. >=2 of: unilateral, pulsating, moderate/severe, aggravated by activity (got 4)
+  ✓ D. >=1 of: nausea/vomiting, OR photophobia+phonophobia
+  ✓ E. Not better accounted for by another ICHD-3 dx
+
+  Migraine with aura ICHD-3 1.2                                                                                               Criteria met
+
+  ✓ A. >=2 attacks (got 6)
+  ✓ B. >=1 fully reversible aura symptom (visual/sensory/speech/motor/brainstem/retinal)
+  ✓ C. >=3 of 6 aura characteristics (got 6)
+  ✓ D. Not better accounted for by another ICHD-3 dx
+
+  Decision support, not a diagnosis. This report is a deterministic aggregation of published ICHD-3 criteria from self-logged diary data; it
+  reads only structured fields, never the free-text notes, so multilingual notes can never change a verdict. Every primary-headache criterion
+  ends with “not better accounted for by another ICHD-3 diagnosis,” which the engine assumes unless a clinician sets otherwise. Confirm
+  with a clinician.
+Cause Finder — beyond the primary differential
+Possible secondary / fixable causes and cranial neuralgias the logged pattern fits, with the test that confirms or excludes each. Decision
+support for clinician review — not a diagnosis.
+
+
+  Sleep-related (incl. sleep apnea)                                                                                               Discuss
+
+  ✓ headaches present on waking are often sleep-related
+  Test: A sleep study (especially if you snore, wake unrefreshed, or have morning headaches). · See: Sleep clinic / GP referral
+
+  Worth considering only if mornings are your worst time / you have sleep symptoms.
+
+
+
+  Tests worth considering
+  ▸ Sleep study. Morning/sleep-linked headaches can be sleep-apnea related.
+

@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "result": {
+    "caseId": "mwa-myoclonus-pmc11464945",
+    "sourceUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11464945/",
+    "entriesWritten": 30,
+    "pdfPath": "validation/reports/pdf/mwa-myoclonus-pmc11464945.pdf",
+    "textPath": "validation/reports/pdf/mwa-myoclonus-pmc11464945.txt",
+    "expectedPhrases": [
+      "Headache Diary",
+      "Doctor Report",
+      "ICHD-3 Classification Analysis",
+      "Decision support, not a diagnosis",
+      "Migraine with aura",
+      "ICHD-3 1.2"
+    ],
+    "missingPhrases": [],
+    "reportRowsInDom": 30
+  }
+}

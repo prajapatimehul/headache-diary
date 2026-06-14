@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "validate:cases": "tsx scripts/validate-public-cases.ts --iterations=50",
     "browser:smoke": "tsx scripts/browser-smoke.ts --url=http://localhost:3000",
+    "pdf:validate": "tsx scripts/pdf-case-validation.ts --url=http://localhost:3000",
     "db:push": "supabase db push"
   },
   "dependencies": {

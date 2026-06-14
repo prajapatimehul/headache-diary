@@ -1,6 +1,6 @@
 # Public Case Validation Report
 
-Generated: 2026-06-14T12:36:33.040Z
+Generated: 2026-06-14T12:49:42.355Z
 Date window: 2026-05-16 to 2026-06-14
 Fixtures: 30
 Iterations: 50
